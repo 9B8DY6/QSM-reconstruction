@@ -1,8 +1,8 @@
 # QSM reconstruction w/ Deep Image Prior
 To run code...
-''' 
+```
 bash run_DIP.sh
-'''
+```
 ## What is QSM?
 
 ## How to reconstruct QSM?
