@@ -28,7 +28,7 @@ From [QSM wikipedia](https://en.wikipedia.org/wiki/Quantitative_susceptibility_m
 ## Method
 In practice, there is no ground-truth in MRI acquisition but only gold-standard which is manually considered as standard. However, previous works solve this problem in supervised learning-way with regarding gold-standard as ground-truth. It is theoretically wrong approach so, we adopt Deep Image Prior which is optimization-based solver effective in inverse problems. 
 
-Inverse Problem definition
+### Inverse Problem definition
 ```math
 y=A(x)+b
 ```
@@ -40,7 +40,7 @@ Deep learning-based models learn inverse of $`A`$, $`A^{-1}`$ to reconstruct rea
 ### Deep Image Prior (DIP)
 [original paper](https://arxiv.org/abs/1711.10925)
 
-A great deal of image statistics are captured by the structure of generator ConvNets, independent of learning. This is especially true for the statistics required to solve certain restoration problems, where image prior must supplement the information lost in the degradation processes. 
+A great deal of image statistics are captured by the structure of generator ConvNets, independent of learning. This is especially true for the statistics required to solve certain restoration problems (inverse problems), where image prior must supplement the information lost in the degradation processes. 
 
 DIP interprets the neural network $`f_\theta`$ as a parameterziation of the image $`x`$. The network maps the paramters $`\theta`$, comprising the weights and bias of the filters in the network, to the image $`x`$. 
 
@@ -48,14 +48,16 @@ DIP interprets the neural network $`f_\theta`$ as a parameterziation of the imag
 
 When you only have degraded image $`x_0`$, the network takes fixed gaussian noise vector $`z`$ as input and update it to reconstruct intact signal $`x`$ in $`x_0`$.
 Then, the network $`f_\theta (z)`$ is optimized in way of parameterization of signal $`x`$ with respect to $`\theta`$.
-The below formula satifies the optimization. 
+The below formula satifies the optimization. In this term, $`y=x_0`$.
 ```math
 argmin_\theta ||A(f_\theta (z)) - y||^2_2
 ```
 
 ### My approach
 
-<img src="https://github.com/9B8DY6/QSM_DIP__/assets/67573223/45c2e6a4-ee40-4ae3-9146-003f2a8ce349" width = 800, height = 200>
+
+![그림1](https://github.com/9B8DY6/QSM-reconstruction/assets/67573223/cfd28867-efab-4b17-9854-165d385eeb7e)
+
 
 We only have degraded data, local-field $`\delta B`$. So we take $`N-`$ stacked 2D gaussian noise $`Z \in R^{N \times H \times W}`$ as input to 3D DIP to output $`x = f_\theta (z)`$. We optimize this 3D DIP with the formula  defined as below,
 ```math
